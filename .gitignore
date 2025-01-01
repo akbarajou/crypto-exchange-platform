@@ -1,32 +1,51 @@
-# Prerequisites
-*.d
+# Ignore build artifacts
+/build/
+/bin/
+/*.exe
+/*.out
+/*.o
+/*.a
+/*.so
+/*.dll
+/*.dylib
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
+# Ignore temporary files
+*.tmp
+*.swp
+*.swo
+*.log
+*.bak
+*.old
+*.class
 *.obj
 
-# Precompiled Headers
-*.gch
-*.pch
+# Ignore IDE/editor files
+.idea/
+.vscode/
+*.code-workspace
+*.sln
+*.user
+*.ncb
+*.suo
+*.opt
+*.pdb
+*.db
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
 
-# Fortran module files
-*.mod
-*.smod
+# Ignore CMake files
+/CMakeFiles/
+/CMakeCache.txt
+/Makefile
+/*.cmake
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+# Ignore test output
+/tests/test_results/
+*.gcov
+*.gcda
+*.gcno
 
-# Executables
-*.exe
-*.out
-*.app
+# Ignore compiled documentation
+/docs/build/
