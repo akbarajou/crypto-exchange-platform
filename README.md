@@ -38,21 +38,30 @@ Although this project is limited in scope to educational purposes, potential fut
 
 This project is open-source and available for educational use. Any implementation or modification of this project for real-world trading purposes is strongly discouraged and done at your own risk.
 
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Getting Started](#getting-started)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgements](#acknowledgements)
 
 ## Technologies Used
 
 - **Programming Language:** C++
-- **Development Environment:** Command Line Interface (CLI)
+- **Development Environment:** Command Line Interface (CLI), Visual Studio Code, CMake
 - **Others:** Standard Template Library (STL), File I/O for data storage, OOP
 
+
+## Building and Running the Project
+*clone this repository and navigate to the project directory*
+
+1. Create a new directory for the project and navigate to it.
+   ```bash
+   mkdir build && cd build
+   ```
+2. Run CMake to configure the project.
+   ```bash
+    cmake ..
+    ```
+3. Build the project.
+    ```bash
+    cmake --build .
+    ```
+4. Run the executable.
+    ```bash
+    ./CryptoExchange
+    ```
