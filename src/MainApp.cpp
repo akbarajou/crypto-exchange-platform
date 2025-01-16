@@ -1,14 +1,15 @@
 #include <iostream>
 #include <vector>
-#include "MainMenu.h"
+#include "MainApp.h"
+#include "FileReader.h"
 
 
-MainMenu::MainMenu()
+MainApp::MainApp()
 {
     std::cout << "Welcome to the Crypto Exchange Platform." << '\n';
 }
 
-void MainMenu::init()
+void MainApp::init()
 {
     int choice;
     loadOrderBook();
@@ -21,20 +22,12 @@ void MainMenu::init()
     }    
 }
 
-void MainMenu::loadOrderBook()
+void MainApp::loadOrderBook()
 {
-    std::cout << "Loading order book..." << '\n';
-    
-    OrderBookEntry order1{1000, 0.02, "2020/03/17 17:01:24.884492", "BTC/USDT", OrderBookType::BID};
-    OrderBookEntry order2{2000, 0.02, "2020/03/17 17:01:24.884492", "BTC/USDT", OrderBookType::BID};
-
-    orders.push_back(order1);
-    orders.push_back(order2);
-
-    std::cout << "Order book loaded." << " Size: " << orders.size() << '\n';
+    orders = FileReader::readCSV("../data/20200317.csv");
 }
 
-void MainMenu::displayMenu()
+void MainApp::displayMenu()
 {
     std::cout << "1: Help." << '\n';
     std::cout << "2: Exchange Stats." << '\n';
@@ -46,39 +39,55 @@ void MainMenu::displayMenu()
     std::cout << "Enter your choice: ";
 }
 
-void MainMenu::displayHelp()
+void MainApp::displayHelp()
 {
     std::cout << "Help - your aim is to make money. Analyze the market and make offers and bids to make money." << '\n';
 }
 
-void MainMenu::displayExchangeStats()
+void MainApp::displayExchangeStats()
 {
     std::cout << "Exchange Stats - display the current exchange stats." << '\n';
     std::cout << "Entries: " << orders.size() << '\n';
+
+    unsigned int bids = 0;
+    unsigned int asks = 0;
+    for (OrderBookEntry& e : orders)
+    {
+        if (e.orderType == OrderBookType::ask)
+        {
+            asks++;
+        }
+        if (e.orderType == OrderBookType::bid)
+        {
+            bids++;
+        }
+    }
+
+    std::cout << "OrderBook ASKs: " << asks << "\tBIDs: " << bids << '\n';
 }
 
-void MainMenu::enterOffer()
+void MainApp::enterOffer()
 {
     std::cout << "Mark and offer - enter the amount" << '\n';
 }
 
-void MainMenu::enterBid()
+void MainApp::enterBid()
 {
     std::cout << "Make a bid - enter the amount" << '\n';
 }
 
-void MainMenu::displayWallet()
+void MainApp::displayWallet()
 {
     std::cout << "Wallet - display your current wallet." << '\n';
 }
 
-void MainMenu::gotoNextTimeFrame()
+void MainApp::gotoNextTimeFrame()
 {
     std::cout << "Continue - go to the next time frame." << '\n';
 }
 
 
-int MainMenu::getUserOption()
+int MainApp::getUserOption()
 {
     int choice;
     std::cin >> choice;
@@ -92,7 +101,7 @@ int MainMenu::getUserOption()
     return choice;
 }
 
-void MainMenu::processUserOption(int choice)
+void MainApp::processUserOption(int choice)
 {
     switch(choice)
     {

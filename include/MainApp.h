@@ -4,10 +4,10 @@
 #include "OrderBookEntry.h"
 
 
-class MainMenu
+class MainApp
 {
     public:
-        MainMenu();
+        MainApp();
         void init();
     
     private:

@@ -1,15 +1,12 @@
-#include <iostream>
-#include <string>
-#include <vector>
 
-#include "MainMenu.h"
-#include "OrderBookEntry.h"
+#include "MainApp.h"
 
 
 int main()
 {
-    MainMenu mainMenu{};
-    mainMenu.init();     
+    MainApp App{};
+    App.init();
+    
 
     return 0;
 }
