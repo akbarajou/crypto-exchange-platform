@@ -23,7 +23,7 @@ std::vector<OrderBookEntry> FileReader::readCSV(std::string csvFilePath)
             }
             catch (const std::exception& e)
             {
-                std::cout << "readCSV: bad line \n";
+                std::cout << "FileReader::readCSV - bad line \n";
             }
         } // end of while
     }
@@ -59,7 +59,7 @@ OrderBookEntry FileReader::stringsToOBE(std::vector<std::string> tokens)
     
     if (tokens.size() != 5) // check bad line
     {
-        std::cout << "Bad line\n";
+        std::cout << " FileReader::stringsToOBE - Bad line\n";
         throw std::exception{};
     }
 
@@ -87,3 +87,33 @@ OrderBookEntry FileReader::stringsToOBE(std::vector<std::string> tokens)
     return obe;
 }
 
+OrderBookEntry FileReader::stringsToOBE(std::string priceStr,
+                            std::string amountStr,
+                            std::string timestamp,
+                            std::string product,
+                            OrderBookType orderBookType)
+{
+    double price, amount;
+    try
+    { 
+        price = std::stod(priceStr);
+        amount = std::stod(amountStr);
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << "FileReader::stringsToOBE - Bad float: " << priceStr << '\n';
+        std::cout << "FileReader::stringsToOBE - Bad float: " << amountStr << '\n';
+        throw;
+    }
+
+    OrderBookEntry obe
+    {
+        price,
+        amount,
+        timestamp,
+        product,
+        orderBookType
+    };
+
+    return obe;
+}

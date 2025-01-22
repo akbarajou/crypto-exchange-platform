@@ -2,25 +2,32 @@
 
 #include <vector>
 #include "OrderBookEntry.h"
+#include "OrderBook.h"
 
 
 class MainApp
 {
-    public:
-        MainApp();
-        void init();
-    
-    private:
-        void loadOrderBook();
-        void displayMenu();
-        void displayHelp();
-        void displayExchangeStats();
-        void enterOffer();
-        void enterBid();
-        void displayWallet();
-        void gotoNextTimeFrame();
-        int getUserOption();
-        void processUserOption(int choice);
-        std::vector<OrderBookEntry> orders;
+public:
+    MainApp();
+    void init();
+
+private:
+    void displayMenu();
+    void displayHelp();
+    void displayExchangeStats();
+    void enterAsk();
+    void enterBid();
+    void displayWallet();
+    void gotoNextTimeFrame();
+    int getUserOption();
+    void processUserOption(int choice);
+    void displayStatisticsForType(const std::string& product,
+                                  OrderBookType type,
+                                  const std::string& typeName);
+
+    std::string currentTime;
+
+    // OrderBook orderBook{"../data/20200317.csv"};
+    OrderBook orderBook{"../data/test.csv"};
 
 };
