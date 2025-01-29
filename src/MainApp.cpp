@@ -1,7 +1,9 @@
 #include <iostream>
 #include <vector>
-#include <limits>
 #include "MainApp.h"
+
+#include <algorithm>
+
 #include "OrderBook.h"
 #include "OrderBookEntry.h"
 #include "FileReader.h"
@@ -16,6 +18,8 @@ MainApp::MainApp()
 void MainApp::init()
 {
     currentTime = orderBook.getEarliestTime();
+    wallet.insertCurrency("BTC", 10);
+
     int choice;
     while (true)
     {
@@ -79,15 +83,24 @@ void MainApp::enterAsk()
                 tokens[0],
                 OrderBookType::ask
             );
-            orderBook.insertOrder(obe);
+
+            obe.username = "simuser";
+
+            if (wallet.canFulFillOrder(obe))
+            {
+                std::cout << "Wallet looks good" << '\n';
+                orderBook.insertOrder(obe);
+            }
+            else
+            {
+                std::cout << "Wallet has insufficient funds!" << '\n';
+            }
         }
         catch (const std::exception& e)
         {
             std::cerr << "MainApp::enterAsk - Bad input: " << e.what() << '\n';
         }    
     }
-
-    std::cout << "You typed: " << input << '\n';
 }
 
 void MainApp::enterBid()
@@ -113,20 +126,30 @@ void MainApp::enterBid()
                 tokens[0],
                 OrderBookType::bid
             );
-            orderBook.insertOrder(obe);
+
+            obe.username = "simuser";
+
+            if (wallet.canFulFillOrder(obe))
+            {
+                std::cout << "Wallet looks good" << '\n';
+                orderBook.insertOrder(obe);
+            }
+            else
+            {
+                std::cout << "Wallet has insufficient funds" << '\n';
+            }
         }
         catch (const std::exception& e)
         {
             std::cerr << "MainApp::enterBid - Bad input: " << e.what() << '\n';
         }    
     }
-
-    std::cout << "You typed: " << input << '\n';
 }
 
 void MainApp::displayWallet()
 {
-    std::cout << "Wallet - display your current wallet." << '\n';
+    std::cout << "Your current wallet." << '\n';
+    std::cout << wallet.toString() << '\n';
 }
 
 void MainApp::gotoNextTimeFrame()
@@ -137,6 +160,12 @@ void MainApp::gotoNextTimeFrame()
     for (OrderBookEntry& sale : sales)
     {
         std::cout << "Sale price: " << sale.price << "\t amount: " << sale.amount << '\n';
+
+        if (sale.username == "simuser")
+        {
+            /* update the wallet */
+            wallet.processSale(sale);
+        }
     }
     currentTime =orderBook.getNextTime(currentTime);
 }
